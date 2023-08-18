@@ -1,19 +1,36 @@
-# README
+# Zredis（简约的redis可视化软件）
 
-## About
+## 特点
 
-This is the official Wails Vue template.
+- 管理多个连接
+- 增删改查
+- 执行redis命令
+- 使用element-plus作为UI组件
+- 支持Windows，MacOS，Linux
+- 体积小，在windows下12mb左右
+- 免安装，打开即用
+- ......
 
-You can configure the project by editing `wails.json`. More information about the project settings can be found
-here: https://wails.io/docs/reference/project-config
+## 技术栈
 
-## Live Development
+golang，wails，vue，element-plus
 
-To run in live development mode, run `wails dev` in the project directory. This will run a Vite development
-server that will provide very fast hot reload of your frontend changes. If you want to develop in a browser
-and have access to your Go methods, there is also a dev server that runs on http://localhost:34115. Connect
-to this in your browser, and you can call your Go code from devtools.
+## 使用方式
 
-## Building
+![image-20230819001029047](https://img2023.cnblogs.com/blog/3124367/202308/3124367-20230819001030673-101899449.png)
 
-To build a redistributable, production mode package, use `wails build`.
+
+
+![image-20230819001229398](https://img2023.cnblogs.com/blog/3124367/202308/3124367-20230819001229884-383579265.png)
+
+
+
+![image-20230819001355321](https://img2023.cnblogs.com/blog/3124367/202308/3124367-20230819001355751-341408966.png)
+
+## 自行编译
+
+先下载wails [The Wails Project | Wails](https://wails.io/zh-Hans/) 和node.js https://nodejs.org/。
+
+下载源码，使用IDE打开。
+
+按照文档 `wails build`进行编译即可。
