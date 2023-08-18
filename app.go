@@ -252,9 +252,25 @@ func (a *App) SetZsetScore(z data_zset.ZsetData) model.SimpleResponse {
 	return model.SimpleResponse{Code: 200, Data: z}
 }
 
-// hash
+// GetHash  获取hash值
 func (a *App) GetHash(h data_hash.HashData) model.SimpleResponse {
 	err := h.GetHash(a.ctx, RedisDB)
+	if err != nil {
+		return model.SimpleResponse{Code: 500, Data: err}
+	}
+	return model.SimpleResponse{Code: 200, Data: h}
+}
+
+func (a *App) DelHashOne(h data_hash.HashData) model.SimpleResponse {
+	err := h.DelHashOne(a.ctx, RedisDB)
+	if err != nil {
+		return model.SimpleResponse{Code: 500, Data: err}
+	}
+	return model.SimpleResponse{Code: 200, Data: h}
+}
+
+func (a *App) SetHash(h data_hash.HashData) model.SimpleResponse {
+	err := h.SetHash(a.ctx, RedisDB)
 	if err != nil {
 		return model.SimpleResponse{Code: 500, Data: err}
 	}

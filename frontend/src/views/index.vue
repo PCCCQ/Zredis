@@ -3,27 +3,28 @@
 import DataList from "../components/DataList.vue";
 import DisplayEdit from "../components/DisplayEdit.vue";
 import {AnyCmd,GetDBList,ChangeDB} from "../../wailsjs/go/main/App.js";
-import {reactive, ref} from "vue";
+import {reactive, ref, watch} from "vue";
 import Cmd from "../components/Cmd.vue";
 import {Back, Postcard} from "@element-plus/icons-vue";
+import AddData from "../components/AddData.vue";
 const cmd= ref('')
 const showTerminal= ref(false)
 const showData=ref("")
 const data=reactive({
   DBList:[{DBName:"db0",DBNumber:0}],
-  value:0
+  value:0,
+  time:0
 })
-function  exec(){
-  console.log(cmd.value)
-  AnyCmd(cmd.value).then(res=>{
-    console.log(res)
-    showData.value=res.data
-  })
-}
+
 const childCmd=ref(null)
 function openTerminal(){
   childCmd.value.drawer=true
 }
+const childAddData=ref(null)
+function addDataFunc(){
+  childAddData.value.isShow=true
+}
+
 function getDB(){
   GetDBList().then(res=>{
     if(res.code===200){
@@ -36,7 +37,11 @@ getDB()
 function valueChange(val){
   ChangeDB(val).then(res=> {
     console.log(res)
+    changeTime()
   })
+  }
+  function changeTime(){
+    data.time=new Date().getTime()
   }
 </script>
 
@@ -46,14 +51,16 @@ function valueChange(val){
 <!--      Header-->
       <div class="header-text">
         <router-link to="/"><el-link  :icon="Back" :underline="false">返回</el-link></router-link>
+        <span style="margin-left: 20px"></span>
+        <el-button type="primary" size="small" @click="addDataFunc">新增数据</el-button>
 </div>
     </el-header>
 
     <el-container>
-      <el-aside width="300px"><data-list :key="data.value"/></el-aside>
+      <el-aside width="300px"><data-list :key="data.time"/></el-aside>
       <el-main>
 <!--        <HelloWorld/>-->
-      <display-edit :key="data.value"></display-edit>
+      <display-edit :key="data.time"></display-edit>
       </el-main>
     </el-container>
     <el-footer>
@@ -75,6 +82,7 @@ function valueChange(val){
     </el-footer>
   </el-container>
   <cmd ref="childCmd"></cmd>
+<add-data ref="childAddData" :time="data.time"></add-data>
 </template>
 <style scoped>
 

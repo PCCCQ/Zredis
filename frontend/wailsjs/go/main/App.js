@@ -22,6 +22,10 @@ export function Del(arg1) {
   return window['go']['main']['App']['Del'](arg1);
 }
 
+export function DelHashOne(arg1) {
+  return window['go']['main']['App']['DelHashOne'](arg1);
+}
+
 export function DelListOne(arg1) {
   return window['go']['main']['App']['DelListOne'](arg1);
 }
@@ -72,6 +76,10 @@ export function Greet(arg1) {
 
 export function RedisInit(arg1) {
   return window['go']['main']['App']['RedisInit'](arg1);
+}
+
+export function SetHash(arg1) {
+  return window['go']['main']['App']['SetHash'](arg1);
 }
 
 export function SetKey(arg1, arg2) {

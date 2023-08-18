@@ -32,13 +32,12 @@ func (h *HashData) GetHash(ctx context.Context, RedisDB *redis.Client) (err erro
 	return err
 }
 
-//func (h *HashData) SetHash(ctx context.Context, RedisDB *redis.Client) (err error) {
-//	h.Value, err = RedisDB.HGetAll(ctx, h.Key).Result()
-//	return
-//}
+func (h *HashData) SetHash(ctx context.Context, RedisDB *redis.Client) (err error) {
+	return RedisDB.HSet(ctx, h.Key, h.ValueList[0].Key, h.ValueList[0].Value).Err()
+}
+
 //
-//
-//func (h *HashData) DelHashOne(ctx context.Context, RedisDB *redis.Client) (err error) {
-//	h.Value, err = RedisDB.HDel(ctx, h.Key,).Result()
-//	return
-//}
+
+func (h *HashData) DelHashOne(ctx context.Context, RedisDB *redis.Client) (err error) {
+	return RedisDB.HDel(ctx, h.Key, h.ValueList[0].Key).Err()
+}
