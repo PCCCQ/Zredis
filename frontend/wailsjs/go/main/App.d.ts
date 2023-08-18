@@ -12,6 +12,8 @@ export function AddZset(arg1:data_zset.ZsetData):Promise<model.SimpleResponse>;
 
 export function AllKeyTypes():Promise<model.SimpleResponse>;
 
+export function AnyCmd(arg1:string):Promise<model.SimpleResponse>;
+
 export function Del(arg1:string):Promise<model.SimpleResponse>;
 
 export function DelListOne(arg1:data_list.ListData):Promise<model.SimpleResponse>;

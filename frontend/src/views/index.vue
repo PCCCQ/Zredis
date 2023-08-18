@@ -1,9 +1,25 @@
 <script setup>
 
-import HelloWorld from "../components/HelloWorld.vue";
-import {Pointer} from "@element-plus/icons-vue";
 import DataList from "../components/DataList.vue";
 import DisplayEdit from "../components/DisplayEdit.vue";
+import {AnyCmd} from "../../wailsjs/go/main/App.js";
+import {ref} from "vue";
+import Cmd from "../components/Cmd.vue";
+import {Back, Postcard} from "@element-plus/icons-vue";
+const cmd= ref('')
+const showTerminal= ref(false)
+const showData=ref("")
+function  exec(){
+  console.log(cmd.value)
+  AnyCmd(cmd.value).then(res=>{
+    console.log(res)
+    showData.value=res.data
+  })
+}
+const childCmd=ref(null)
+function openTerminal(){
+  childCmd.value.drawer=true
+}
 </script>
 
 <template>
@@ -23,15 +39,26 @@ import DisplayEdit from "../components/DisplayEdit.vue";
       </el-main>
     </el-container>
     <el-footer>
+<!--      <span><el-input v-model="cmd"></el-input>-->
+<!--      <el-button @click="exec">执行</el-button>{{showData}}-->
+<!--      </span>-->
+      <el-select v-model="value" class="m-2" placeholder="Select" size="small">
+        <el-option
+            v-for="item in 10"
+            :key="item"
+            :label="item"
+            :value="item"
+        />
+      </el-select>
+      <span style="margin-left: 100px"></span>
+      <el-link @click="openTerminal" :underline="false" :icon="Postcard">执行redis命令</el-link>
+      <span style="margin-left: 100px"></span>
       <el-link href="https://github.com/PCCCQ" target="_blank" :underline="false">version:1.0.0 @PCCCQ</el-link>
 
     </el-footer>
   </el-container>
+  <cmd ref="childCmd"></cmd>
 </template>
-<script>
-import { Back} from '@element-plus/icons-vue'
-
-</script>
 <style scoped>
 
 .el-header{

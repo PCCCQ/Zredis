@@ -224,11 +224,14 @@ func (a *App) DelZsetOne(z data_zset.ZsetData) model.SimpleResponse {
 }
 
 func (a *App) SetZsetScore(z data_zset.ZsetData) model.SimpleResponse {
+	// Set the score of the zset in Redis
 	err := z.SetZsetScore(a.ctx, RedisDB)
 
+	// If there is an error, return an error response
 	if err != nil {
 		return model.SimpleResponse{Code: 500, Data: z}
 	}
+	// Otherwise, return a successful response
 	return model.SimpleResponse{Code: 200, Data: z}
 }
 
@@ -239,4 +242,12 @@ func (a *App) GetHash(h data_hash.HashData) model.SimpleResponse {
 		return model.SimpleResponse{Code: 500, Data: err}
 	}
 	return model.SimpleResponse{Code: 200, Data: h}
+}
+
+func (a *App) AnyCmd(cmd string) model.SimpleResponse {
+	r, err := data_public.AnyCmd(a.ctx, RedisDB, cmd)
+	if err != nil {
+		return model.SimpleResponse{Code: 500, Data: err}
+	}
+	return model.SimpleResponse{Code: 200, Data: r}
 }

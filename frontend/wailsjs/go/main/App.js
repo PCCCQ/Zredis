@@ -10,6 +10,10 @@ export function AllKeyTypes() {
   return window['go']['main']['App']['AllKeyTypes']();
 }
 
+export function AnyCmd(arg1) {
+  return window['go']['main']['App']['AnyCmd'](arg1);
+}
+
 export function Del(arg1) {
   return window['go']['main']['App']['Del'](arg1);
 }

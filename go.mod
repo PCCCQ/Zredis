@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/redis/go-redis/v9 v9.0.5
-	github.com/wailsapp/wails/v2 v2.5.1
+	github.com/wailsapp/wails/v2 v2.5.0
 )
 
 require (
