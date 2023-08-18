@@ -2,13 +2,17 @@
 
 import DataList from "../components/DataList.vue";
 import DisplayEdit from "../components/DisplayEdit.vue";
-import {AnyCmd} from "../../wailsjs/go/main/App.js";
-import {ref} from "vue";
+import {AnyCmd,GetDBList,ChangeDB} from "../../wailsjs/go/main/App.js";
+import {reactive, ref} from "vue";
 import Cmd from "../components/Cmd.vue";
 import {Back, Postcard} from "@element-plus/icons-vue";
 const cmd= ref('')
 const showTerminal= ref(false)
 const showData=ref("")
+const data=reactive({
+  DBList:[{DBName:"db0",DBNumber:0}],
+  value:0
+})
 function  exec(){
   console.log(cmd.value)
   AnyCmd(cmd.value).then(res=>{
@@ -20,6 +24,20 @@ const childCmd=ref(null)
 function openTerminal(){
   childCmd.value.drawer=true
 }
+function getDB(){
+  GetDBList().then(res=>{
+    if(res.code===200){
+      data.DBList=res.data
+      console.log(res.data)
+    }
+  })
+}
+getDB()
+function valueChange(val){
+  ChangeDB(val).then(res=> {
+    console.log(res)
+  })
+  }
 </script>
 
 <template>
@@ -32,22 +50,21 @@ function openTerminal(){
     </el-header>
 
     <el-container>
-      <el-aside width="300px"><data-list/></el-aside>
+      <el-aside width="300px"><data-list :key="data.value"/></el-aside>
       <el-main>
 <!--        <HelloWorld/>-->
-      <display-edit></display-edit>
+      <display-edit :key="data.value"></display-edit>
       </el-main>
     </el-container>
     <el-footer>
 <!--      <span><el-input v-model="cmd"></el-input>-->
 <!--      <el-button @click="exec">执行</el-button>{{showData}}-->
 <!--      </span>-->
-      <el-select v-model="value" class="m-2" placeholder="Select" size="small">
+      <el-select v-model="data.value" placeholder="Select" size="small" @change="valueChange">
         <el-option
-            v-for="item in 10"
-            :key="item"
-            :label="item"
-            :value="item"
+            v-for="item in data.DBList"
+            :label="item.DBName"
+            :value="item.DBNumber"
         />
       </el-select>
       <span style="margin-left: 100px"></span>

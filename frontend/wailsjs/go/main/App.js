@@ -14,6 +14,10 @@ export function AnyCmd(arg1) {
   return window['go']['main']['App']['AnyCmd'](arg1);
 }
 
+export function ChangeDB(arg1) {
+  return window['go']['main']['App']['ChangeDB'](arg1);
+}
+
 export function Del(arg1) {
   return window['go']['main']['App']['Del'](arg1);
 }
@@ -32,6 +36,10 @@ export function DelString(arg1) {
 
 export function DelZsetOne(arg1) {
   return window['go']['main']['App']['DelZsetOne'](arg1);
+}
+
+export function GetDBList() {
+  return window['go']['main']['App']['GetDBList']();
 }
 
 export function GetHash(arg1) {

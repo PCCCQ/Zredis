@@ -57,6 +57,23 @@ func (a *App) RedisInit(r redis_init.RedisClient) model.SimpleResponse {
 	return model.SimpleResponse{Code: 200, Data: "连接成功"}
 }
 
+// GetDBList 获取全部数据库
+func (a *App) GetDBList() model.SimpleResponse {
+	r, err := data_public.GetDBList(a.ctx, RedisDB)
+	if err != nil {
+		return model.SimpleResponse{Code: 500, Data: err}
+	}
+	return model.SimpleResponse{Code: 200, Data: r}
+}
+
+func (a *App) ChangeDB(DB int) model.SimpleResponse {
+	err := data_public.ChangeDB(a.ctx, RedisDB, DB)
+	if err != nil {
+		return model.SimpleResponse{Code: 500, Data: err}
+	}
+	return model.SimpleResponse{Code: 200, Data: "切换成功"}
+}
+
 // AllKeyTypes 获取全部数据，key和type
 func (a *App) AllKeyTypes() model.SimpleResponse {
 

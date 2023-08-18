@@ -5,6 +5,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/redis/go-redis/v9"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -64,4 +65,27 @@ func AnyCmd(ctx context.Context, client *redis.Client, cmd string) (r any, err e
 	}
 	fmt.Println("r", r, "err", err)
 	return
+}
+
+func GetDBList(ctx context.Context, client *redis.Client) (any, error) {
+	//r, err := client.Do(ctx, "CONFIG", "GET", "databases").Result()
+	result, err := client.ConfigGet(ctx, "databases").Result()
+	if err != nil {
+		return nil, err
+	}
+	tmp, _ := strconv.Atoi(result["databases"])
+	type tmpStruct struct {
+		DBName   string
+		DBNumber int
+	}
+	tmpMap := make([]tmpStruct, tmp)
+	for i := range tmpMap {
+		tmpMap[i].DBName = "db" + strconv.Itoa(i)
+		tmpMap[i].DBNumber = i
+	}
+	return tmpMap, err
+}
+
+func ChangeDB(ctx context.Context, client *redis.Client, DB int) error {
+	return client.Do(ctx, "SELECT", DB).Err()
 }
